@@ -1,0 +1,25 @@
+{
+  "name": "quizzer-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@google-cloud/logging": "7.2.3",
+    "@google-cloud/logging-winston": "3.0.6",
+    "cookie-parser": "~1.4.4",
+    "cors": "2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mathjs": "6.6.1",
+    "morgan": "1.9.1",
+    "mysql": "2.18.1",
+    "mysql2": "2.1.0",
+    "request": "2.88.2",
+    "request-promise": "4.2.5",
+    "winston": "3.2.1"
+  }
+}
