@@ -36,7 +36,13 @@ class quizHistoryDAO {
         try{
 
             var qqData = await dbHelp.withTransaction(this.exDB, async () => {
-                var SQL = "SELECT * FROM `Q_QUIZ_HISTORY` WHERE QQH_QU_ID=?";
+                var SQL =   "SELECT "+
+                            "`Q_QUIZ_HISTORY`.`QQH_ID`,`Q_QUIZ_HISTORY`.`QQH_GUI`,`Q_QUIZ_HISTORY`.`QQH_OS`,`Q_QUIZ_HISTORY`.`QQH_ASKED`,"+
+                            "`Q_QUIZ_HISTORY`.`QQH_CORRECT`,`Q_QUIZ_HISTORY`.`QQH_DURATION`,`Q_QUIZ_HISTORY`.`QQH_START_TS`,`Q_QUIZ_HISTORY`.`QQH_QUIZ_FILE`,"+
+                            "`Q_QUIZ_HISTORY`.`QQH_QU_ID`,`Q_USER`.`QU_LOGIN` as `user` "+
+                            "FROM `Q_QUIZ_HISTORY` "+
+                            "left outer join `Q_USER` on `Q_QUIZ_HISTORY`.`QQH_QU_ID` = `Q_USER`.`QU_ID` "+
+                            "WHERE QQH_QU_ID=?";
                 qqDebug.consoleLogger(SQL);
                 qqDebug.consoleLogger(userID);
     
@@ -57,7 +63,13 @@ class quizHistoryDAO {
         try{
 
             var qqData = await dbHelp.withTransaction(this.exDB, async () => {
-                var SQL = "SELECT * FROM `Q_QUIZ_HISTORY` ORDER BY `QQH_QU_ID` ASC, `QQH_START_TS` ASC";
+                var SQL =   "SELECT "+
+                        "`Q_QUIZ_HISTORY`.`QQH_ID`,`Q_QUIZ_HISTORY`.`QQH_GUI`,`Q_QUIZ_HISTORY`.`QQH_OS`,`Q_QUIZ_HISTORY`.`QQH_ASKED`,"+
+                        "`Q_QUIZ_HISTORY`.`QQH_CORRECT`,`Q_QUIZ_HISTORY`.`QQH_DURATION`,`Q_QUIZ_HISTORY`.`QQH_START_TS`,`Q_QUIZ_HISTORY`.`QQH_QUIZ_FILE`,"+
+                        "`Q_QUIZ_HISTORY`.`QQH_QU_ID`,`Q_USER`.`QU_LOGIN` as `user` "+
+                        "FROM `Q_QUIZ_HISTORY` "+
+                        "left outer join `Q_USER` on `Q_QUIZ_HISTORY`.`QQH_QU_ID` = `Q_USER`.`QU_ID` "+
+                        "ORDER BY `QQH_QU_ID` ASC, `QQH_START_TS` ASC";
                 qqDebug.consoleLogger(SQL);
                 return await this.exDB.runQuery(SQL);
             });
