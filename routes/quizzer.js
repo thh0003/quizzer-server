@@ -156,30 +156,4 @@ router.get('/QHlookupAll/:user', async function(req, res, next) {
     };
 });
 
-router.get('/symBenchmark/', async function(req, res, next) {
-    try {
-        const symbolUtils = await new symUtils();
-        
-        res.send(await symbolUtils.lookupTopMarketCap());
-    } catch (err){
-        this.sysLogger.writeErrorEntry(`relstrRoute-symBenchmark Error: ${err.message} Stack: ${err.stack}`);
-        throw new Error(err);        
-    }
-  
-  });
-
-router.post('/getfiltered', async function(req, res, next) {
-    try {
-        console.log(req.body.blockchain);
-        res.send(await rsU.getfiltered(req.body));
-
-//        res.send({response: 'RECEIVED REQUEST'});
-    } catch (err){
-        this.sysLogger.writeErrorEntry(`relstrRoute-getfiltered Error: ${err.message} Stack: ${err.stack}`);
-        throw new Error(err);
-    };
-    
-});
-
-
 module.exports = router;
