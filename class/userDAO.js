@@ -62,6 +62,24 @@ class userDAO {
         };
     }
 
+    async usersLookupAll(userID){
+
+        try{
+            var qqData = await dbHelp.withTransaction(this.exDB, async () => {
+                var SQL = "SELECT * FROM `Q_USER` ORDER BY `QU_LOGIN`";
+                return await this.exDB.runQuery(SQL, [userID]);
+            });
+
+            return qqData[0];
+
+        } catch(err) {
+            // API call failed...
+            this.sysLogger.writeLogEntry(`userDAO-usersLookupAll ${err.message}, ${err.stack}`);
+            throw new Error(err);
+        };
+    }
+
+
     async deleteUser(userID){
 
         try{

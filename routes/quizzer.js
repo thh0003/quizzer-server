@@ -36,6 +36,35 @@ router.get('/userLookup/:user', async function(req, res, next) {
 
 });
 
+/* GET users listing. */
+router.get('/usersLookup/:user', async function(req, res, next) {
+    try{
+        
+        let userLogin = req.params.user;
+        qqDebug.consoleLogger(`quizzer->usersLookup: user: ${userLogin}`);
+        let userInfo = await userDB.lookupUser(userLogin);
+        let usersInfo;
+        if (typeof userInfo[0]!='undefined'){
+            if (userInfo[0].QU_ROLE == 'ADMIN'){
+                qqDebug.consoleLogger(userInfo);
+                usersInfo = await userDB.usersLookupAll();
+            } else {
+                res.send({error:"User doesn't have permission to view all Users"});
+                throw new Error("User doesn't have permission to view all Users");
+            }
+        }
+
+        res.send(usersInfo);
+
+    } catch (err){
+        this.sysLogger.writeErrorEntry(`quizzer-userLookup Error: ${err.message} Stack: ${err.stack}`);
+        throw new Error(err);
+    };
+
+    
+
+});
+
 router.get('/makeAdmin/:user', async function(req, res, next) {
     try{
         
